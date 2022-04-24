@@ -1,5 +1,5 @@
 # uniBscProject
-university project for bachler
+This is a university project for bachler. 
 
 
 # NP complete problem solutions in the SameGame
@@ -8,7 +8,7 @@ http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.294.6089&rep=rep1&type=
 //TODO write a better reference
 
 
-# SameGame rules I used:
+# SameGame/Clickomania rules used for this program:
 -You gain n^2 point where n is the number of same colored tiles adjancented to each other.  
 -There is no step limit.  
 -There is no time limit.  

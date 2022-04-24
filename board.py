@@ -1,4 +1,5 @@
 import os
+import sys
 
 #global values:
 columns, rows = 5,5
@@ -48,16 +49,17 @@ def collapse(matrix):
 
 #this prints the matrix as a player wouuld see it
 def printMatrixNice(matrix):
-    print(columns+";"+rows)
+    print(str(columns) + ";" + str(rows))
     for i in range(rows-1,-1,-1):
         for j in range(0,columns):
             print(matrix[j][i], end=" ")
         print()
     print()
 
-def initBoardFromFile(matrix,):    
-    pathToFile= r'D:\Dokumentumok\Mark Karpati stuff\BME\06 felev\OnLab\Map5x5.txt' #add later that you can give the file name in a parameter
-    f = open(pathToFile,'r')
+def initBoardFromFile(matrix,fileName):    
+    f = open(os.path.join(sys.path[0], fileName), "r") 
+
+    #f = open(pathToFile,'r')
     firstLine = f.readline().split(";")
     w = int(firstLine[0])
     h = int(firstLine[1])
@@ -74,7 +76,7 @@ def main():
     #init the table for the game
     
     Matrix = [ [0, 0, 1,  2,1], [2, 1, 3, 2,1], [2, 0, 4, 0,0], [0, 0, 0, 0,0], [2, 4, 4, 4,1] ]
-    initBoardFromFile(Matrix, )#"Map5x5.txt")
+    initBoardFromFile(Matrix, "Map5x5.txt")
     printMatrixNice(Matrix)
     #Matrix = [[0 for x in range(0,columns)] for y in range(0,rows)]
     collapse(Matrix)
