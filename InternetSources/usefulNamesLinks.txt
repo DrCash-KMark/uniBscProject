@@ -1,0 +1,6 @@
+
+
+Google Scholar
+
+example for monte carlo tree search in pyhton:
+https://gist.github.com/qpwo/c538c6f73727e254fdc7fab81024f6e1
