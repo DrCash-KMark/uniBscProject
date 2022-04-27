@@ -2,7 +2,7 @@ import os
 import sys
 
 #global values:
-columns, rows = 5,5
+columns, rows = (5,6)
 #left down is zero zero in the matrix
 
 
@@ -26,25 +26,25 @@ def tileChosed(x,y,matrix,number):
 def collapse(matrix):
     #collapse the colums downwards
     newPlaceId=-1
-    for i in range(0,columns):
-       for j in range(0,rows):
-           if matrix[i][j]== 0 and newPlaceId==-1:
-               newPlaceId=j
-           if matrix[i][j]!=0 and newPlaceId!=-1:
-               matrix[i][newPlaceId]=matrix[i][j] #collapsing the Tiles downwards
+    for w in range(0,columns):
+       for h in range(0,rows):
+           if matrix[h][w]== 0 and newPlaceId==-1: #initalizing where to collapse the colum downwards
+               newPlaceId=h
+           if matrix[h][w]!=0 and newPlaceId!=-1:
+               matrix[newPlaceId][w]=matrix[h][w] #collapsing the Tiles downwards
                newPlaceId+=1
-               matrix[i][j]=0
+               matrix[h][w]=0
        newPlaceId=-1
     
     #collapsing the colums leftwards
     newPlaceId=-1
-    for i in range(0, columns):#columns-1):
-        if matrix[i][0]==0 and newPlaceId==-1:
-            newPlaceId=i
-        if matrix[i][0]!=0 and newPlaceId!=-1:
-            for j in range(0,rows):
-                matrix[newPlaceId][j]=matrix[i][j]
-                matrix[i][j]=0
+    for w in range(0, columns):#columns-1):
+        if matrix[0][w]==0 and newPlaceId==-1:
+            newPlaceId=w
+        if matrix[0][w]!=0 and newPlaceId!=-1:
+            for h in range(0,rows):
+                matrix[h][newPlaceId]=matrix[h][w]
+                matrix[h][w]=0
             newPlaceId+=1
 
 #this prints the matrix as a player wouuld see it
@@ -52,31 +52,32 @@ def printMatrixNice(matrix):
     print(str(columns) + ";" + str(rows))
     for i in range(rows-1,-1,-1):
         for j in range(0,columns):
-            print(matrix[j][i], end=" ")
+            print(matrix[i][j], end=" ")
         print()
     print()
 
-def initBoardFromFile(matrix,fileName):    
+def initBoardFromFile(fileName):    
     f = open(os.path.join(sys.path[0], fileName), "r") 
 
     #f = open(pathToFile,'r')
     firstLine = f.readline().split(";")
-    w = int(firstLine[0])
-    h = int(firstLine[1])
+    width = int(firstLine[0])
+    height = int(firstLine[1])
     #this reads in the board from a file which looks as a player would see
-    matrix = [[0 for x in range(w)] for y in range(h)]
-    for i in range(rows-1,-1,-1):
+    matrix = [[0 for x in range(width)] for y in range(height)]
+    for i in range(height-1,-1,-1):
         stringLine = f.readline().split(";")
-        for j in range(0,columns):
-            matrix[j][i] = int(stringLine[j])
+        for j in range(0,width,1):
+            matrix[i][j] = int(stringLine[j])
+    return matrix
 
 def main():
     print("Hello World!")
     
     #init the table for the game
     
-    Matrix = [ [0, 0, 1,  2,1], [2, 1, 3, 2,1], [2, 0, 4, 0,0], [0, 0, 0, 0,0], [2, 4, 4, 4,1] ]
-    initBoardFromFile(Matrix, "Map5x5.txt")
+    Matrix = [[0 for i in range(columns)]for j in range(rows)]
+    Matrix = initBoardFromFile("Map5x6.txt")
     printMatrixNice(Matrix)
     #Matrix = [[0 for x in range(0,columns)] for y in range(0,rows)]
     collapse(Matrix)
