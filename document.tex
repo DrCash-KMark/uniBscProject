@@ -1,6 +1,6 @@
 \documentclass{article}
 
-\title{SameGame más nevén Cilckomania NP puzzle megoldásának megközelítése különböző módszerekkel}
+\title{SameGame más nevén Cilckomania NP teljes puzzle megoldásának megközelítése különböző módszerekkel}
 \author{Kárpáti Márk András}
 \date{2022 Tavaszi félév}
 
@@ -9,6 +9,29 @@
 	\maketitle
 	
 	Önálló laboratórium
+	
+	%Logic and Simulation of Interaction and Reasoning (AISB 2008 Proceedings volume 9)
+	%Addressing NP-Complete Puzzles with Monte-Carlo Methods page 55
+	%Maarten P.D. Schadd, Mark H.M. Winands, H. Jaap van den Herik & Huib Aldewereld
+	
+	Használt Szabályok:
+	\begin{itemize}		
+		\item  Minden mezőre kiválasztható és ér pontot.
+		\item Ha egy mezőt kiválasztunk az eltűnik, ha egy mező eltűnik, akkor az összes vele szomszédos azonos azonosítójú/színű mező is eltűnik.
+		\item Egy lépés \( (n-1)^2 \) pontot ér, ahol n az egyszerre eltüntet mezők száma
+		\item Nincs idő korlát.
+		\item Nincs lépés szám korlát.
+		\item Minden lépés után a játék pálya "összeomlik" ha van üres hely az elemek lefelé mozdulnak, ha van egy egész üres oszlop, akkor balra felé mozdulnak.
+	\end{itemize}
+	
+	Főbb funkciói a programnak:
+	\begin{itemize}
+		\item Teljesen véletlenszerű pálya generálás, ahol a pálya mérete és a mezők típusának számossága megadható
+		\item Pálya beolvasása megadott .csv formátumban.
+		\item Pálya kiírása a beolvasáshoz megfelelő .csv formátumban.		
+	\end{itemize}
+	
+	A pálya .csv formátumú fájlokban van tárolva, aminek első sora oszlop és sorok száma. Ezt követi a pálya az összes adat ';' karakterrel van elválasztva.
 	
 	%Komment sor, csak hogy tudjam, hogy % a komment karakter
 	
