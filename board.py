@@ -2,7 +2,7 @@ import os
 import sys
 
 # global values:
-columns, rows = (5, 6)
+columns, rows = (15, 16)
 # left down is zero zero in the matrix
 
 

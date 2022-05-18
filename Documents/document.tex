@@ -1,0 +1,60 @@
+\documentclass{article}
+
+
+\title{SameGame NP teljes puzzle megoldásának megközelítése különböző módszerekkel}
+\author{Kárpáti Márk András}
+\date{2022 Tavaszi félév}
+
+\begin{document}
+	
+	\maketitle
+	
+	
+	\section{Játék}
+	
+	SameGame az egy NP teljes, egyjátékosos, teljesinformációs  játék. Tradicionálisan a játék szabályai: pálya egy tetszőleges téglalap általában 15x15 méretű. 5 különböző színű mező van. Egy lépés abból ál, hogy eltávolítunk egy ortogonálisan illeszkedő elem csoportot. Az elemek lezuhannak, és amint megjelenik egy üres oszlop a jobb oldalon lévő oszlopok balra tolódnak. A játék akkor ér véget, ha elfogytak a mezők. A variációkat ahol a színek száma más vagy a pálya mérete gyakran más néven nevezik pl.: Clickomania.
+	
+	\section{Klasszikus metódusok A* és a IDA*}
+	
+	
+	
+	\section{Megközelítés}
+	
+	A cél az, hogy minél jobb algoritmust találjak, a játék megoldására. Ehhez először könnyítettem a játék szabályokon. Az így készült algoritmussal és az eredeti szabályokkal legenerált játék pályákról nagy valószínűséggel megmondható lesz, hogy meglehet-e oldani őket.
+	
+	
+	%Logic and Simulation of Interaction and Reasoning (AISB 2008 Proceedings volume 9)
+	%Addressing NP-Complete Puzzles with Monte-Carlo Methods page 55
+	%Maarten P.D. Schadd, Mark H.M. Winands, H. Jaap van den Herik & Huib Aldewereld
+	
+	Használt Szabályok:
+	\begin{itemize}		
+		\item pálya mérete 15x16
+		\item 5 különböző fajta mező szín van (én ezt számokkal jelölöm)
+		\item  Minden mezőre kiválasztható és ér pontot. %minden csoport egy csoport minimum 2 egyszínű mező
+		\item Ha egy csoportot kiválasztunk az eltűnik, egy csoportba tartozik az összes vele szomszédos azonos azonosítójú/színű mező.
+		\item Egy lépés \( (n-1)^2 \) pontot ér, ahol n az egyszerre eltüntet mezők száma
+		\item Nincs idő korlát.
+		\item Nincs lépés szám korlát.
+		\item Minden lépés után a játék pálya "összeomlik" ha van üres hely az elemek lefelé mozdulnak, ha van egy egész üres oszlop, akkor balra felé tolódnak az oszlopok.
+		\item A játék véget ér, ha elfogytak a mezők % vagy nem marad lehetséges lépés
+		
+	\end{itemize}
+	
+	Főbb funkciói a programnak:
+	\begin{itemize}
+		\item Teljesen véletlenszerű pálya generálás, ahol a pálya mérete és a mezők típusának számossága megadható
+		\item Pálya beolvasása megadott .csv formátumban.
+		\item Pálya kiírása a beolvasáshoz megfelelő .csv formátumban.		
+	\end{itemize}
+	
+	A pálya .csv formátumú fájlokban van tárolva, aminek első sora oszlop és sorok száma. Ezt követi a pálya az összes adat ';' karakterrel van elválasztva.
+	
+	%Komment sor, csak hogy tudjam, hogy % a komment karakter
+	
+	Elmélet:
+	
+	\bibliography{onlabForrasok}
+	\bibliographystyle{plain}
+	
+\end{document}

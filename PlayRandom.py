@@ -36,10 +36,10 @@ def main():
     Matrix = boardGeneration.generateBoardFullRandom(
         columns=5, rows=6, numOfDifferentTiles=5
     )
-    initRandomPlayer(Matrix, columns=5, rows=6)
+    initRandomPlayer(Matrix, columns=15, rows=16)
     findPossibleOptions()
-    selecTile()
-    print(selecTile())
+    Coordinates = selecTile().split(";")
+    print("row: " + Coordinates[0] + " Colum: " + Coordinates[1])
 
 
 main()
