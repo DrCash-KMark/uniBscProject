@@ -1,6 +1,5 @@
 \documentclass{article}
 
-
 \title{SameGame NP teljes puzzle megoldásának megközelítése különböző módszerekkel}
 \author{Kárpáti Márk András}
 \date{2022 Tavaszi félév}
@@ -10,12 +9,42 @@
 	\maketitle
 	
 	
-	\section{Játék}
+	\section{A SameGame játék}
 	
-	SameGame az egy NP teljes, egyjátékosos, teljesinformációs  játék. Tradicionálisan a játék szabályai: pálya egy tetszőleges téglalap általában 15x15 méretű. 5 különböző színű mező van. Egy lépés abból ál, hogy eltávolítunk egy ortogonálisan illeszkedő elem csoportot. Az elemek lezuhannak, és amint megjelenik egy üres oszlop a jobb oldalon lévő oszlopok balra tolódnak. A játék akkor ér véget, ha elfogytak a mezők. A variációkat ahol a színek száma más vagy a pálya mérete gyakran más néven nevezik pl.: Clickomania.
+	SameGame egy puzzle játék, amit Kuniaki Moribe talált ki chain shot! néven 1985-ben. Fujitsu FM-8/7 sorozatra volt kiadva, és egy havi lapban jelent meg egy számítógépes napi lapban. \cite{ChainShot1985}. Később Eiji Fukumata a SameGame névvel újra kreaálta 1992-ben.
 	
-	\section{Klasszikus metódusok A* és a IDA*}
+	\subsection{Szabályok}
 	
+	\begin{itemize}		
+		\item pálya mérete 15x15
+		\item 5 különböző fajta mező szín van.
+		\item Kezdetben a pálya összes mezején van valamilyen szín
+		\item Egy lépés egy csoport eltávolításából áll.
+		\item Egy csoport legalább 2 egyszínű mező, ami érintkezik egymással, szomszédosak.
+		\item Egy lépés \( (n-1)^2 \) pontot ér, ahol n az egy lépésben eltüntet mezők száma
+		\item Nincs idő korlát.
+		\item Nincs lépés szám korlát.
+		\item Minden lépés után a játék pálya "összeomlik" ha van üres hely az elemek lefelé mozdulnak, ha van egy egész üres oszlop, akkor balra felé tolódnak az oszlopok.
+		\item A játék véget ér, ha elfogytak a mezők vagy nem marad lehetséges lépés
+		
+	\end{itemize}
+	
+	\subsection{SamGame komplexitása}
+	
+	A komplexitása, azt mutatja, hogy mennyire nehéz megoldani a játékot. Két fontos mértéke a játék-fa komplexitás és az állapottér komplexitás.\cite{allis1994searching} A játék-fa kompleszítás a levélcsomópontok száma a megoldási fában az induló pozícióból. Az állapottér kompleszítás az elérhető játék állások a kezdő pozicionál.
+	\\	
+	\\
+	A SameGambe-ben a játék-fa komplexitás nagyjából \(b^d\), ahol b az átlagos elágazási faktor és a d az átlagos játék hossza.
+	
+	\section{Kereső algoritmusok puzzle-okhoz}	
+	
+	Klasszikus megközelítése a puzzle-k megoldásának \textbf{A*} \cite{hart1968formal} és az \textbf{IDA*} \cite{korf1985depth}. Az A* egy Legjobbat először keresés, ahol minden csúcs el van tárolva egy listában. Ez a lista rendezve van egy elfogadható kiértékelő függvénnyel. Minden iterációban az első elemet eltávolítjuk, és a gyereke elemeit hozzá adjuk a rendezett listához. Ezt addig ismételjük, amíg a célállapot nem kerül a lista legelejére. IDA* az egy iteratívan mélyülő változata az A* keresésnek. Úgy használ mélységi bejárást, hogy nem kell eltárolni az egész fát a memóriában. Addig keres mélységi eljárással, amíg nem ér levébe és a kiértékelő függvény értéke nem ér el egy küszöböt. Ha a keresés eredmény nélkül tér vissza, akkor a küszöböt növeljük.
+	\\
+	\\
+	Mind két módszer nagyon erősen függ a kiértékelő függvény minőségétől. Még ha a függvény egy elfogadható alsó becslés, akkor is elég pontosnak kell lennie. Klasszikus puzzle játékoknál mint a Nyolcas játék, annak nagyobb változatai \cite{korf1985depth}  és a Sokoban \cite{junghanns2000pushing} ez a megközelítés nagyon jól működik. Hiszen ott egy jó alul-becslő függvény a Manhattan távolság. A fő feladata ennek területnek a kiértékelő függvény javítása pl mintaadatbázisokkal. \cite{felner2005dual} \cite{culberson1998pattern}
+	\\
+	\\
+	Ezek a megközelítési módok elbuknak a SameGame esetén, mert nem annyira egyszerű egy elfogadható függvényt (nem becsli túl az árat) készíteni, ami még mindig elég pontos. Erre az egyik próbálkozás, hogy pontokat asszociálunk a táblán lévő csoportokhoz. Ez vissza is adja azt a pontszámot, amit nagyjából kapnánk, ha föntről lefelé haladva eltávolítanánk ezeket a csoportokat. De ha egy optimális pontszámot szeretnénk elérni a SameGame-ben, akkor a jelenlegi helyzethez egy "túl becslő" lenne szükségünk, hiszen nem a legrövidebb utat keressük, hanem a legtöbb pontot szeretnénk elérni. Egy elfogadható becslő függvényt kapunk, ha úgy tekintjük, hogy az összes ugyan olyan színű mezőt egyszerre el tudjuk távolítani a pályáról. Ezt lehet javítani azzal, hogy mínusz pontot ad, ha ezzel a táblát nem tudjuk teljesen kiüríteni. Azonban ez messze van az igazi ponttól, amit egy helyzetben lehet szerezni, és nem működik jól az A* és IDA*-val sem. A tesztek azt mutatják, hogy ezzel a becslővel ellátott A*, IDA* Szélességi kereséshez hasonlóan viselkednek.\cite{SCHADD20123} A probléma az, hogy a gyerek heurisztikus értéke sokkal kisebb lesz mint a szülője, hacsak nem egy nagy csoportot távolított el. Sejtések szerint ugyan ettől szenvednek a mélységi keresés, az Elágazás és korlátozás algoritmus is. \cite{vempaty1991depth} Ezekből kifolyólag jelent kihívást a SameGame a puzzle-k kutatásában.
 	
 	
 	\section{Megközelítés}
@@ -28,18 +57,7 @@
 	%Maarten P.D. Schadd, Mark H.M. Winands, H. Jaap van den Herik & Huib Aldewereld
 	
 	Használt Szabályok:
-	\begin{itemize}		
-		\item pálya mérete 15x16
-		\item 5 különböző fajta mező szín van (én ezt számokkal jelölöm)
-		\item  Minden mezőre kiválasztható és ér pontot. %minden csoport egy csoport minimum 2 egyszínű mező
-		\item Ha egy csoportot kiválasztunk az eltűnik, egy csoportba tartozik az összes vele szomszédos azonos azonosítójú/színű mező.
-		\item Egy lépés \( (n-1)^2 \) pontot ér, ahol n az egyszerre eltüntet mezők száma
-		\item Nincs idő korlát.
-		\item Nincs lépés szám korlát.
-		\item Minden lépés után a játék pálya "összeomlik" ha van üres hely az elemek lefelé mozdulnak, ha van egy egész üres oszlop, akkor balra felé tolódnak az oszlopok.
-		\item A játék véget ér, ha elfogytak a mezők % vagy nem marad lehetséges lépés
-		
-	\end{itemize}
+	
 	
 	Főbb funkciói a programnak:
 	\begin{itemize}

@@ -16,8 +16,26 @@ def initRandomPlayer(matrix, columns, rows):
     Matrix = matrix
 
 
+# with at least 2 connected
 def findPossibleOptions():
     global possibleOptions, Rows, Columns, Matrix
+    for i in range(0, rows):
+        for j in range(0, columns):
+            if Matrix[i][j] != 0:
+
+                if i == rows:
+                    if matrix[i][j] == matrix[i][j + 1]:
+                        possibleOptions.append(str(i) + ";" + str(j))
+                else:
+                    if (
+                        matrix[i][j] == matrix[i][j + 1]
+                        or matrix[i][j] == matrix[i + 1][j]
+                    ):
+                        possibleOptions.append(str(i) + ";" + str(j))
+
+
+# finds all the tile coordinates which ar not empty
+def findAllNonEmpty():
     for i in range(Rows - 1, -1, -1):
         for j in range(0, Columns):
             if Matrix[i][j] != 0:

@@ -6,10 +6,28 @@ columns, rows = (15, 16)
 # left down is zero zero in the matrix
 
 
+def initBoardFromFile(fileName):
+    f = open(os.path.join(sys.path[0], fileName), "r")
+
+    # f = open(pathToFile,'r')
+    firstLine = f.readline().split(";")
+    width = int(firstLine[0])
+    height = int(firstLine[1])
+    # this reads in the board from a file which looks as a player would see
+    matrix = [[0 for x in range(width)] for y in range(height)]
+    for i in range(height - 1, -1, -1):
+        stringLine = f.readline().split(";")
+        for j in range(0, width, 1):
+            matrix[i][j] = int(stringLine[j])
+    return matrix
+
+
 # never call this function with number being 0 it leads to an infinte recursion
 # indexing starts from 0
 def tileChosed(x, y, matrix, number):
     numOfTilesHit = 0
+    if number == 0:
+        return
     if matrix[x][y] == number:
         matrix[x][y] = 0
         numOfTilesHit += 1
@@ -61,25 +79,24 @@ def printMatrixNice(matrix):
     print()
 
 
-def initBoardFromFile(fileName):
-    f = open(os.path.join(sys.path[0], fileName), "r")
-
-    # f = open(pathToFile,'r')
-    firstLine = f.readline().split(";")
-    width = int(firstLine[0])
-    height = int(firstLine[1])
-    # this reads in the board from a file which looks as a player would see
-    matrix = [[0 for x in range(width)] for y in range(height)]
-    for i in range(height - 1, -1, -1):
-        stringLine = f.readline().split(";")
-        for j in range(0, width, 1):
-            matrix[i][j] = int(stringLine[j])
-    return matrix
-
-
 # Return the score achived with the removal of numberOfTitlesHit
 def calculateScore(numberOfTilesHit):
     return (numberOfTilesHit - 1) ^ 2
+
+
+# Check if there are any more valid move to make on the board
+def isThereValidMove(matrix):
+    global columns, rows
+    for i in range(0, rows):
+        for j in range(0, columns):
+            if i == rows:
+                if matrix[i][j] == matrix[i][j + 1]:
+                    return True
+            else:
+                if matrix[i][j] == matrix[i][j + 1] or matrix[i][j] == matrix[i + 1][j]:
+                    return True
+
+    return False
 
 
 # The main loop of the game
@@ -103,7 +120,7 @@ def gameLoop(matrix):
             print(score)
             totalScore += score
         # since the collapse always moves item towards 0,0 if it is empty it means the game has ended because no mroe tiles remain.
-        if matrix[0][0] == 0:
+        if matrix[0][0] == 0 or isThereValidMove(matrix) == False:
             gameIsOn = False
 
 
