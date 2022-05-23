@@ -17,15 +17,15 @@
 	
 	\begin{itemize}		
 		\item pálya mérete 15x15
-		\item 5 különböző fajta mező szín van.
+		\item 5 különböző fajta blokk szín van.
 		\item Kezdetben a pálya összes mezején van valamilyen szín
 		\item Egy lépés egy csoport eltávolításából áll.
-		\item Egy csoport legalább 2 egyszínű mező, ami érintkezik egymással, szomszédosak.
-		\item Egy lépés \( (n-1)^2 \) pontot ér, ahol n az egy lépésben eltüntet mezők száma
+		\item Egy csoport legalább 2 egyszínű blokk, ami érintkezik egymással, szomszédosak.
+		\item Egy lépés $ (n-1)^2 $ pontot ér, ahol n az egy lépésben eltüntet blokkok száma
 		\item Nincs idő korlát.
 		\item Nincs lépés szám korlát.
 		\item Minden lépés után a játék pálya "összeomlik" ha van üres hely az elemek lefelé mozdulnak, ha van egy egész üres oszlop, akkor balra felé tolódnak az oszlopok.
-		\item A játék véget ér, ha elfogytak a mezők vagy nem marad lehetséges lépés
+		\item A játék véget ér, ha elfogytak a blokkok vagy nem marad lehetséges lépés
 		
 	\end{itemize}
 	
@@ -34,9 +34,26 @@
 	A komplexitása, azt mutatja, hogy mennyire nehéz megoldani a játékot. Két fontos mértéke a játék-fa komplexitás és az állapottér komplexitás.\cite{allis1994searching} A játék-fa kompleszítás a levélcsomópontok száma a megoldási fában az induló pozícióból. Az állapottér kompleszítás az elérhető játék állások a kezdő pozicionál.
 	\\	
 	\\
-	A SameGambe-ben a játék-fa komplexitás nagyjából \(b^d\), ahol b az átlagos elágazási faktor és a d az átlagos játék hossza.
+	A SameGambe-ben a játék-fa komplexitás nagyjából $b^d$, ahol b az átlagos elágazási faktor és a d az átlagos játék hossza. b és d önjáték kísérletezéssel kideríthetők, 250 puzzle-ből az jött ki, hogy az átlagos játékhossz $d=62.2$ lépés, az elágazás faktor pedig $b=21.1$, ami $10^{82}$ komplexitású játék-fát eredményez. Az állapottér komplexitását lehet úgy számolni, hogy egy oszlopra nézzük meg.  $10^{159}$\cite{SCHADD20123} 
+	\\
+	\\
+	Továbbá a játékot jellemzi, hogy melyik komplexitás osztályba tartozik. \cite{johnson1990catalog} A hasonló játék Clickomania bizonyítottan NP-teljes. \cite{fleischer2002complexity} Ugyan akkor SameGame komplexitása lehet más. Minél több pontot ér a blokkok eltávolítása annál jobban eltérhet a Clickomania karakterisztikájától. A Clickomania-ban az egyetlen cél az összes blokk eltávolítása, amíg a SameGame-ben a nagy csoportú blokkok eltávolításáért is pont jár. Alább a bizonyítás, hogy pontozástól függetlenül is legalább NP teljes.
+	\\
+	\\
+	Ahhoz hogy bizonyítsuk a játékról, hogy NP teljes elég egy olyan játékra egyszerűsíteni, ami NP teljes. Ideális út találása helyet azt bizonyítjuk, hogy már egy adott megoldás optimalitásának ellenőrzése is NP teljes. A megoldás S úgy definiáljuk, hogy egy út a kezdő állapotból egy vég állapotba. Vagy (1)minden blokkot eltávolított a játék pályáról vagy (2)befejeződött még blokkokkal a pályán. Mind két esetben vizsgálni kell, hogy van-e megoldás, ami javítja a pontot, azzal hogy mindent eltávolít. Ha ilyen megoldás találása NP teljes, akkor a SameGame is NP teljes.
+	\\
+	\\
+	Mivel Clickomania olyan változata a SameGame-nek ahol nem jár pont a lépésekért, csak egy megoldást kell találni, ezért SameGame legalább olyan nehéz mint a Clickomania. Mivel a Clickomania NP teljes legalább 5 szín és 2 oszlop esetén\cite{fleischer2002complexity}, ezért SameGame legalább NP teljes.
 	
 	\section{Kereső algoritmusok puzzle-okhoz}	
+	
+	Algoritmusok, amiket eddig használtak a SameGame megoldása során és azoknak a részletei.
+	
+	\subsection{DBS keresés}
+	
+	A viszonyítási alap (Benchmark) a SameGame kutatáshoz 20 pocizóra van standardizálva. Az első SameGame programot \cite{smith2006personal} írta. Ez a program egy nem dokumentált DBS-t (Mélységi keresés költségvetéssel) használ. Amikor a program eléri azt a mélységet, ahol elfogy a kerete, akkor egy mohó algoritmus lefut. Ez a program 72,816 pontot ért el 2-3 óra kereséssel pozíciónként.
+	
+	\subsection{Tipikus módszerek puzzle játékokhoz A* IDA*}
 	
 	Klasszikus megközelítése a puzzle-k megoldásának \textbf{A*} \cite{hart1968formal} és az \textbf{IDA*} \cite{korf1985depth}. Az A* egy Legjobbat először keresés, ahol minden csúcs el van tárolva egy listában. Ez a lista rendezve van egy elfogadható kiértékelő függvénnyel. Minden iterációban az első elemet eltávolítjuk, és a gyereke elemeit hozzá adjuk a rendezett listához. Ezt addig ismételjük, amíg a célállapot nem kerül a lista legelejére. IDA* az egy iteratívan mélyülő változata az A* keresésnek. Úgy használ mélységi bejárást, hogy nem kell eltárolni az egész fát a memóriában. Addig keres mélységi eljárással, amíg nem ér levébe és a kiértékelő függvény értéke nem ér el egy küszöböt. Ha a keresés eredmény nélkül tér vissza, akkor a küszöböt növeljük.
 	\\
@@ -44,34 +61,67 @@
 	Mind két módszer nagyon erősen függ a kiértékelő függvény minőségétől. Még ha a függvény egy elfogadható alsó becslés, akkor is elég pontosnak kell lennie. Klasszikus puzzle játékoknál mint a Nyolcas játék, annak nagyobb változatai \cite{korf1985depth}  és a Sokoban \cite{junghanns2000pushing} ez a megközelítés nagyon jól működik. Hiszen ott egy jó alul-becslő függvény a Manhattan távolság. A fő feladata ennek területnek a kiértékelő függvény javítása pl mintaadatbázisokkal. \cite{felner2005dual} \cite{culberson1998pattern}
 	\\
 	\\
-	Ezek a megközelítési módok elbuknak a SameGame esetén, mert nem annyira egyszerű egy elfogadható függvényt (nem becsli túl az árat) készíteni, ami még mindig elég pontos. Erre az egyik próbálkozás, hogy pontokat asszociálunk a táblán lévő csoportokhoz. Ez vissza is adja azt a pontszámot, amit nagyjából kapnánk, ha föntről lefelé haladva eltávolítanánk ezeket a csoportokat. De ha egy optimális pontszámot szeretnénk elérni a SameGame-ben, akkor a jelenlegi helyzethez egy "túl becslő" lenne szükségünk, hiszen nem a legrövidebb utat keressük, hanem a legtöbb pontot szeretnénk elérni. Egy elfogadható becslő függvényt kapunk, ha úgy tekintjük, hogy az összes ugyan olyan színű mezőt egyszerre el tudjuk távolítani a pályáról. Ezt lehet javítani azzal, hogy mínusz pontot ad, ha ezzel a táblát nem tudjuk teljesen kiüríteni. Azonban ez messze van az igazi ponttól, amit egy helyzetben lehet szerezni, és nem működik jól az A* és IDA*-val sem. A tesztek azt mutatják, hogy ezzel a becslővel ellátott A*, IDA* Szélességi kereséshez hasonlóan viselkednek.\cite{SCHADD20123} A probléma az, hogy a gyerek heurisztikus értéke sokkal kisebb lesz mint a szülője, hacsak nem egy nagy csoportot távolított el. Sejtések szerint ugyan ettől szenvednek a mélységi keresés, az Elágazás és korlátozás algoritmus is. \cite{vempaty1991depth} Ezekből kifolyólag jelent kihívást a SameGame a puzzle-k kutatásában.
+	Ezek a megközelítési módok elbuknak a SameGame esetén, mert nem annyira egyszerű egy elfogadható függvényt (nem becsli túl az árat) készíteni, ami még mindig elég pontos. Erre az egyik próbálkozás, hogy pontokat asszociálunk a táblán lévő csoportokhoz. Ez vissza is adja azt a pontszámot, amit nagyjából kapnánk, ha föntről lefelé haladva eltávolítanánk ezeket a csoportokat. De ha egy optimális pontszámot szeretnénk elérni a SameGame-ben, akkor a jelenlegi helyzethez egy "túl becslő" lenne szükségünk, hiszen nem a legrövidebb utat keressük, hanem a legtöbb pontot szeretnénk elérni. Egy elfogadható becslő függvényt kapunk, ha úgy tekintjük, hogy az összes ugyan olyan színű blokkot egyszerre el tudjuk távolítani a pályáról. Ezt lehet javítani azzal, hogy mínusz pontot ad, ha ezzel a táblát nem tudjuk teljesen kiüríteni. Azonban ez messze van az igazi ponttól, amit egy helyzetben lehet szerezni, és nem működik jól az A* és IDA*-val sem. A tesztek azt mutatják, hogy ezzel a becslővel ellátott A*, IDA* Szélességi kereséshez hasonlóan viselkednek.\cite{SCHADD20123} A probléma az, hogy a gyerek heurisztikus értéke sokkal kisebb lesz mint a szülője, hacsak nem egy nagy csoportot távolított el. Sejtések szerint ugyan ettől szenvednek a mélységi keresés, az Elágazás és korlátozás algoritmus is. \cite{vempaty1991depth} Ezekből kifolyólag jelent kihívást a SameGame a puzzle-k kutatásában.
+	
+	\section{Egy játékosos Monte-Carlo fakeresés}
+	
+	Továbbiakban Monte-Carlo tree search-t MCTS-nek fogom rövidíteni. MCTS egy olyan legjobbat először keresés, aminek nincs szüksége értékelő funkcióra. MCTS egy kereső fát épít, úgy hogy a leveleknél Monte-Carlo szimulációt használ. A fa minden csomópontja egy játék állást reprezentál és általában tartalmazza az rész-fa átlagos pontját, és hogy mennyiszer lett meglátogatva. MCTS a fakeresések egy családját elkotja, ami a társasjátékok területére vonatkozik. \cite{chaslot2006monte} \cite{coulom2006efficient} \cite{kocsis2006bandit}
+	\\
+	\\
+	Általánosan a MCTS négy lépésből áll, amíg ki nem fut az időből. \cite{chaslot2008progressive} (1)Egy \emph{kiválasztási stratégia} , ami a fa bejárására szolgál, a gyökértől a levélig. (2) Egy \emph{szimulációs stratégia} ami a játék befejezésére szolgál a keresési fa levélpontjától. (3) Egy \emph{kiterjesztési stratégia}, ami megmondja, hogy mennyi és melyik gyerek vannak eltárolva, mint ígéretes levelei a fának. (4) Végül az MC eredményét gyökér felé vivő stratégia, a \emph{Visszaterjesztő stratégia}
+	\\
+	\\
+	A MCTS-re alapozva, a játékokhoz adaptált változatának használata, \emph{Single-player Monte-Carlo tree search (SP-MCTS)} \cite{schadd2008single}. A következő részben MCTS és SP-MCTS különbségeiről lesz szó.
+	\\
+	\subsection{SP-MCTS 4 lépés}
+	
+	A négy lépés iteratívan megy, amíg ki nem fut az időből. Ezek a lépések: (1) kiválasztás, (2) kijátszás, (3) bővítés és (4) visszaterjesztés.
+	
+	\subsection{Kiválasztás}
+	
+	Kiválasztás az egy stratégiai feladat, hogy egy adott csomópont gyerekét kiválassza. Ez irányítja az egyensúlyt a kiaknázás és felfedezés között. A kiaknázás során, olyan lépésekre fókuszál, amik az eddig a legjobb eredményhez vezettek. A felfedezés a kevésbé ígéretes lépések foglalkozik, amiket lehet még fel kell fedezni az eddigi értékelésük bizonytalansága miatt. MCTS-nél minden csomópont, ami a gyökérből indul ki kell választani, amíg elérünk egy olyan pozícióba, ami még nincs benne a fában. Több stratégia is van erre a feladatra. \cite{chaslot2006monte} \cite{coulom2006efficient} \cite{kocsis2006bandit}
+	\\
+	\\
+	Kocsis és Szepesvári \cite{kocsis2006bandit} egy UCT (upper confidence bounds)/(felső bizalmi határ) ajánl kiválasztáshoz. Az SP-MCTS-hez egy módosított UCT verziót használtak. A p csomopot i gyerek kiválasztásánál olyan lépést választ, ami a következő függvényt maximalizálja.
+	\\
+	\\
+	\begin{math}
+	 v_i+C\times\sqrt{\frac{\ln{n_p}}{n_i}}+\sqrt{\frac{\sum{r^2-n_i \times v_i^2+D}}{n_i}}
+	\end{math}
+	\\
+	\\
+	Az első két kifejezés az eredeti UTC-ből áll. Ahol $n_i$  hogy az i-dik csomópontban hányszor lett meglátogatva, \emph{i} jelöli a gyereket és \emph{p} szülő az adott felső bizalmi határ az átlagos játékérték $v_i$. A puzzle számára egy harmadik kifejezést, ami reprezentálja a lehetséges eltéréseket a gyerek csomóponttól \cite{chaslot2006monte} \cite{coulom2006efficient}. Ez tartalmazza a megoldások négyzetének összegét $\sum{r^2}$ amit eddig elért a gyerek csomópont kijavítva a várt eredménnyel $n_i \times v_i^2$. Egy magas konstans érték D-t hozzá adnak, ami biztosítja, hogy ritkán tekintett  csomópontok is ígéretesnek tűnjenek. Mivel az eltérés nem tartomány specifikus, hasznos lehet más tartományokban, ahol pontok variációja fontos funkció (pl.: Puzzle játékok, ahol pontszerzés a lényeg). Alább 2 különbséget írok le a puzzle és a két játékos játékok között, ami befolyásolhatja a kiválasztási stratégiát.
+	\\
+	\\
+	Első, az alapvető különbség a puzzle- és a két játékos játék között \emph{értéktartomány}. Két játékos játékban a végeredményt általában vagy vesztés, döntetlen győzelem vagyis (-1,0,1). Egy csomópont átlagos pontja a [-1,1] tartományban van. Egy puzzle-ben tetszőleges pontot el lehet érni ami nincs benne az előre beállított intervallumban. Például a SameGame-ben vannak pozíciók amik 5.000 pont feletti pontot ér. Egyik megoldás lehet egy konstansokat \emph{C} és \emph{D} olyanra állítunk be amik lehetséges némelyik intervallumokban (például [0,6000] SameGame esetén).  Másik megoldás, hogy az értékeket vissza vezetjük az előbb említett intervallumba [-1,1], de ehhez kell ismerni a maximum értéket. Amikor nem ismerjük, akkor egy elméleti felső határt lehet használni. SameGame esetében egy ilyen határ lenne, ha az összes blokk ugyan olyan színű. Ennek a nagy határnak a következménye lehet, hogy a legtöbb eredmény a 0 környékén helyezkedik el. Vagyis \emph{C} és \emph{D} teljesen más értékekkel kell ellátni.
+	\\
+	\\
+	A másik különbség, hogy puzzle esetén nem kell az ellenfelünk döntésének bizonytalanságán gondolkozni. Vagyis a játék az ellenfél akadályozása nélkül számolható \cite{chaslot2010monte}. Emiatt, nem csak az átlag pont használható, hanem az eddigi lépések maximumok pontja is. Kézi beállítás alapján a maximális pontot \emph{W} 0.02 értékül súllyal adták hozzá az átlag ponthoz.\cite{schadd2012single}
+	\\
+	\subsection{kijátszás}
+	
+	A kijátszás akkor kezdődik meg, amikor olyan pozícióba megyünk, ami még nem része a fának. 
 	
 	
-	\section{Megközelítés}
+	\section{Program képességei}
 	
-	A cél az, hogy minél jobb algoritmust találjak, a játék megoldására. Ehhez először könnyítettem a játék szabályokon. Az így készült algoritmussal és az eredeti szabályokkal legenerált játék pályákról nagy valószínűséggel megmondható lesz, hogy meglehet-e oldani őket.
-	
-	
-	%Logic and Simulation of Interaction and Reasoning (AISB 2008 Proceedings volume 9)
-	%Addressing NP-Complete Puzzles with Monte-Carlo Methods page 55
-	%Maarten P.D. Schadd, Mark H.M. Winands, H. Jaap van den Herik & Huib Aldewereld
-	
-	Használt Szabályok:
-	
-	
-	Főbb funkciói a programnak:
+	A cél az, hogy minél jobb algoritmust találjak, a játék megoldására majd ezt implementáljam. Ehhez elkezdtem a játékot újra megalkotni.
+	\\
+	\\	
+			
+	Eddigi funkciói a programnak:
 	\begin{itemize}
-		\item Teljesen véletlenszerű pálya generálás, ahol a pálya mérete és a mezők típusának számossága megadható
+		\item Teljesen véletlenszerű pálya generálás, ahol a pálya mérete és a blokkok típusának számossága megadható
 		\item Pálya beolvasása megadott .csv formátumban.
-		\item Pálya kiírása a beolvasáshoz megfelelő .csv formátumban.		
+		\item Pálya kiírása a beolvasáshoz megfelelő .csv formátumban.
+		\item Ellenőrzi, hogy maradt-e még lépés lehetőség.
+		\item Pálya "összeomlását" elvégezni.
+		\item  Kiválasztani egy csoportot, és az összes tagját egyszerre eltüntetni.
+		\item a pontszámot kiszámolni.
 	\end{itemize}
 	
 	A pálya .csv formátumú fájlokban van tárolva, aminek első sora oszlop és sorok száma. Ezt követi a pálya az összes adat ';' karakterrel van elválasztva.
-	
-	%Komment sor, csak hogy tudjam, hogy % a komment karakter
-	
-	Elmélet:
-	
+		
 	\bibliography{onlabForrasok}
 	\bibliographystyle{plain}
 	

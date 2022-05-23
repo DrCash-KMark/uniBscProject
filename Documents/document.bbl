@@ -1,9 +1,38 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{allis1994searching}
 Louis~Victor Allis et~al.
 \newblock {\em Searching for solutions in games and artificial intelligence}.
 \newblock Ponsen \& Looijen Wageningen, 1994.
+
+\bibitem{smith2006personal}
+D.~Billings.
+\newblock Personal communication with s.
+
+\bibitem{chaslot2006monte}
+Guillaume Chaslot, Jahn-Takeshi Saito, Bruno Bouzy, JWHM Uiterwijk, and H~Jaap
+  Van Den~Herik.
+\newblock Monte-carlo strategies for computer go.
+\newblock In {\em Proceedings of the 18th BeNeLux Conference on Artificial
+  Intelligence, Namur, Belgium}, pages 83--91, 2006.
+
+\bibitem{chaslot2008progressive}
+Guillaume M~JB Chaslot, Mark~HM Winands, H~Jaap van~den Herik, Jos~WHM
+  Uiterwijk, and Bruno Bouzy.
+\newblock Progressive strategies for monte-carlo tree search.
+\newblock {\em New Mathematics and Natural Computation}, 4(03):343--357, 2008.
+
+\bibitem{chaslot2010monte}
+Guillaume Maurice Jean-Bernard~Chaslot Chaslot.
+\newblock {\em Monte-carlo tree search}, volume~24.
+\newblock Maastricht University, 2010.
+
+\bibitem{coulom2006efficient}
+R{\'e}mi Coulom.
+\newblock Efficient selectivity and backup operators in monte-carlo tree
+  search.
+\newblock In {\em International conference on computers and games}, pages
+  72--83. Springer, 2006.
 
 \bibitem{culberson1998pattern}
 Joseph~C Culberson and Jonathan Schaeffer.
@@ -15,16 +44,34 @@ Ariel Felner, Uzi Zahavi, Jonathan Schaeffer, and Robert~C Holte.
 \newblock Dual lookups in pattern databases.
 \newblock In {\em IJCAI}, pages 103--108, 2005.
 
+\bibitem{fleischer2002complexity}
+RUDOLF Fleischer, LARS Jacobsen, and JIAN MUNRO.
+\newblock The complexity of clickomania.
+\newblock In {\em More Games of No Chance—Combinatorial Games at MSRI, 2000},
+  volume~42, pages 389--404. Cambridge University Press Cambridge, England,
+  2002.
+
 \bibitem{hart1968formal}
 Peter~E Hart, Nils~J Nilsson, and Bertram Raphael.
 \newblock A formal basis for the heuristic determination of minimum cost paths.
 \newblock {\em IEEE transactions on Systems Science and Cybernetics},
   4(2):100--107, 1968.
 
+\bibitem{johnson1990catalog}
+David~S Johnson.
+\newblock A catalog of complexity classes.
+\newblock In {\em Algorithms and complexity}, pages 67--161. Elsevier, 1990.
+
 \bibitem{junghanns2000pushing}
 Andreas Junghanns.
 \newblock {\em Pushing the limits: new developments in single-agent search.}
 \newblock University of Alberta, 2000.
+
+\bibitem{kocsis2006bandit}
+Levente Kocsis and Csaba Szepesv{\'a}ri.
+\newblock Bandit based monte-carlo planning.
+\newblock In {\em European conference on machine learning}, pages 282--293.
+  Springer, 2006.
 
 \bibitem{korf1985depth}
 Richard~E Korf.
@@ -35,12 +82,24 @@ Richard~E Korf.
 K.~Moribe.
 \newblock Chain shot! gekkan ascii.
 
+\bibitem{schadd2008single}
+Maarten~PD Schadd, Mark~HM Winands, HJVD Herik, Guillaume MJ-B Chaslot, and
+  Jos~WHM Uiterwijk.
+\newblock Single-player monte-carlo tree search.
+\newblock In {\em International Conference on Computers and Games}, pages
+  1--12. Springer, 2008.
+
 \bibitem{SCHADD20123}
 Maarten~P.D. Schadd, Mark~H.M. Winands, Mandy~J.W. Tak, and Jos~W.H.M.
   Uiterwijk.
 \newblock Single-player monte-carlo tree search for samegame.
 \newblock {\em Knowledge-Based Systems}, 34:3--11, 2012.
 \newblock A Special Issue on Artificial Intelligence in Computer Games: AICG.
+
+\bibitem{schadd2012single}
+Maarten~PD Schadd, Mark~HM Winands, Mandy~JW Tak, and Jos~WHM Uiterwijk.
+\newblock Single-player monte-carlo tree search for samegame.
+\newblock {\em Knowledge-Based Systems}, 34:3--11, 2012.
 
 \bibitem{vempaty1991depth}
 Nageshwara~Rao Vempaty, Vipin Kumar, and Richard~E Korf.
