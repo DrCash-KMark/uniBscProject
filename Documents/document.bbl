@@ -27,6 +27,12 @@ Guillaume Maurice Jean-Bernard~Chaslot Chaslot.
 \newblock {\em Monte-carlo tree search}, volume~24.
 \newblock Maastricht University, 2010.
 
+\bibitem{chaslot2008parallel}
+Guillaume MJ-B Chaslot, Mark~HM Winands, and HJVD Herik.
+\newblock Parallel monte-carlo tree search.
+\newblock In {\em International Conference on Computers and Games}, pages
+  60--71. Springer, 2008.
+
 \bibitem{coulom2006efficient}
 R{\'e}mi Coulom.
 \newblock Efficient selectivity and backup operators in monte-carlo tree
@@ -89,17 +95,15 @@ Maarten~PD Schadd, Mark~HM Winands, HJVD Herik, Guillaume MJ-B Chaslot, and
 \newblock In {\em International Conference on Computers and Games}, pages
   1--12. Springer, 2008.
 
-\bibitem{SCHADD20123}
-Maarten~P.D. Schadd, Mark~H.M. Winands, Mandy~J.W. Tak, and Jos~W.H.M.
-  Uiterwijk.
-\newblock Single-player monte-carlo tree search for samegame.
-\newblock {\em Knowledge-Based Systems}, 34:3--11, 2012.
-\newblock A Special Issue on Artificial Intelligence in Computer Games: AICG.
-
 \bibitem{schadd2012single}
 Maarten~PD Schadd, Mark~HM Winands, Mandy~JW Tak, and Jos~WHM Uiterwijk.
 \newblock Single-player monte-carlo tree search for samegame.
 \newblock {\em Knowledge-Based Systems}, 34:3--11, 2012.
+
+\bibitem{sutton2018reinforcement}
+Richard~S Sutton and Andrew~G Barto.
+\newblock {\em Reinforcement learning: An introduction}.
+\newblock MIT press, 2018.
 
 \bibitem{vempaty1991depth}
 Nageshwara~Rao Vempaty, Vipin Kumar, and Richard~E Korf.

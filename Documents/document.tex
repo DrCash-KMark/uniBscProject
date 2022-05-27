@@ -34,7 +34,7 @@
 	A komplexitása, azt mutatja, hogy mennyire nehéz megoldani a játékot. Két fontos mértéke a játék-fa komplexitás és az állapottér komplexitás.\cite{allis1994searching} A játék-fa kompleszítás a levélcsomópontok száma a megoldási fában az induló pozícióból. Az állapottér kompleszítás az elérhető játék állások a kezdő pozicionál.
 	\\	
 	\\
-	A SameGambe-ben a játék-fa komplexitás nagyjából $b^d$, ahol b az átlagos elágazási faktor és a d az átlagos játék hossza. b és d önjáték kísérletezéssel kideríthetők, 250 puzzle-ből az jött ki, hogy az átlagos játékhossz $d=62.2$ lépés, az elágazás faktor pedig $b=21.1$, ami $10^{82}$ komplexitású játék-fát eredményez. Az állapottér komplexitását lehet úgy számolni, hogy egy oszlopra nézzük meg.  $10^{159}$\cite{SCHADD20123} 
+	A SameGambe-ben a játék-fa komplexitás nagyjából $b^d$, ahol b az átlagos elágazási faktor és a d az átlagos játék hossza. b és d önjáték kísérletezéssel kideríthetők, 250 puzzle-ből az jött ki, hogy az átlagos játékhossz $d=62.2$ lépés, az elágazás faktor pedig $b=21.1$, ami $10^{82}$ komplexitású játék-fát eredményez. Az állapottér komplexitását lehet úgy számolni, hogy egy oszlopra nézzük meg.  $10^{159}$\cite{schadd2012single} 
 	\\
 	\\
 	Továbbá a játékot jellemzi, hogy melyik komplexitás osztályba tartozik. \cite{johnson1990catalog} A hasonló játék Clickomania bizonyítottan NP-teljes. \cite{fleischer2002complexity} Ugyan akkor SameGame komplexitása lehet más. Minél több pontot ér a blokkok eltávolítása annál jobban eltérhet a Clickomania karakterisztikájától. A Clickomania-ban az egyetlen cél az összes blokk eltávolítása, amíg a SameGame-ben a nagy csoportú blokkok eltávolításáért is pont jár. Alább a bizonyítás, hogy pontozástól függetlenül is legalább NP teljes.
@@ -61,7 +61,7 @@
 	Mind két módszer nagyon erősen függ a kiértékelő függvény minőségétől. Még ha a függvény egy elfogadható alsó becslés, akkor is elég pontosnak kell lennie. Klasszikus puzzle játékoknál mint a Nyolcas játék, annak nagyobb változatai \cite{korf1985depth}  és a Sokoban \cite{junghanns2000pushing} ez a megközelítés nagyon jól működik. Hiszen ott egy jó alul-becslő függvény a Manhattan távolság. A fő feladata ennek területnek a kiértékelő függvény javítása pl mintaadatbázisokkal. \cite{felner2005dual} \cite{culberson1998pattern}
 	\\
 	\\
-	Ezek a megközelítési módok elbuknak a SameGame esetén, mert nem annyira egyszerű egy elfogadható függvényt (nem becsli túl az árat) készíteni, ami még mindig elég pontos. Erre az egyik próbálkozás, hogy pontokat asszociálunk a táblán lévő csoportokhoz. Ez vissza is adja azt a pontszámot, amit nagyjából kapnánk, ha föntről lefelé haladva eltávolítanánk ezeket a csoportokat. De ha egy optimális pontszámot szeretnénk elérni a SameGame-ben, akkor a jelenlegi helyzethez egy "túl becslő" lenne szükségünk, hiszen nem a legrövidebb utat keressük, hanem a legtöbb pontot szeretnénk elérni. Egy elfogadható becslő függvényt kapunk, ha úgy tekintjük, hogy az összes ugyan olyan színű blokkot egyszerre el tudjuk távolítani a pályáról. Ezt lehet javítani azzal, hogy mínusz pontot ad, ha ezzel a táblát nem tudjuk teljesen kiüríteni. Azonban ez messze van az igazi ponttól, amit egy helyzetben lehet szerezni, és nem működik jól az A* és IDA*-val sem. A tesztek azt mutatják, hogy ezzel a becslővel ellátott A*, IDA* Szélességi kereséshez hasonlóan viselkednek.\cite{SCHADD20123} A probléma az, hogy a gyerek heurisztikus értéke sokkal kisebb lesz mint a szülője, hacsak nem egy nagy csoportot távolított el. Sejtések szerint ugyan ettől szenvednek a mélységi keresés, az Elágazás és korlátozás algoritmus is. \cite{vempaty1991depth} Ezekből kifolyólag jelent kihívást a SameGame a puzzle-k kutatásában.
+	Ezek a megközelítési módok elbuknak a SameGame esetén, mert nem annyira egyszerű egy elfogadható függvényt (nem becsli túl az árat) készíteni, ami még mindig elég pontos. Erre az egyik próbálkozás, hogy pontokat asszociálunk a táblán lévő csoportokhoz. Ez vissza is adja azt a pontszámot, amit nagyjából kapnánk, ha föntről lefelé haladva eltávolítanánk ezeket a csoportokat. De ha egy optimális pontszámot szeretnénk elérni a SameGame-ben, akkor a jelenlegi helyzethez egy "túl becslő" lenne szükségünk, hiszen nem a legrövidebb utat keressük, hanem a legtöbb pontot szeretnénk elérni. Egy elfogadható becslő függvényt kapunk, ha úgy tekintjük, hogy az összes ugyan olyan színű blokkot egyszerre el tudjuk távolítani a pályáról. Ezt lehet javítani azzal, hogy mínusz pontot ad, ha ezzel a táblát nem tudjuk teljesen kiüríteni. Azonban ez messze van az igazi ponttól, amit egy helyzetben lehet szerezni, és nem működik jól az A* és IDA*-val sem. A tesztek azt mutatják, hogy ezzel a becslővel ellátott A*, IDA* Szélességi kereséshez hasonlóan viselkednek.\cite{schadd2012single} A probléma az, hogy a gyerek heurisztikus értéke sokkal kisebb lesz mint a szülője, hacsak nem egy nagy csoportot távolított el. Sejtések szerint ugyan ettől szenvednek a mélységi keresés, az Elágazás és korlátozás algoritmus is. \cite{vempaty1991depth} Ezekből kifolyólag jelent kihívást a SameGame a puzzle-k kutatásában.
 	
 	\section{Egy játékosos Monte-Carlo fakeresés}
 	
@@ -100,7 +100,35 @@
 	\\
 	\subsection{kijátszás}
 	
-	A kijátszás akkor kezdődik meg, amikor olyan pozícióba megyünk, ami még nem része a fának. 
+	A kijátszás akkor kezdődik meg, amikor olyan pozícióba megyünk, ami még nem része a fának. Lépések véletlen szerűen vannak kiválasztva, amíg a játék nem ér véget. A választás minőségének érdekében szinte randomizálva vannak kiválasztva, vagyis heurisztikát használva.
+	\\
+	\\
+	Két megoldást említettek TabuRandom és a TabuColorRandom-t. Mind két stratégia, egy nagy csoportot próbál létrehozni egy színből. SameGame-ben egy nagy csoport létrehozása előnyös. Az ötlet az, hogy a kiválasztott színt addig nem választhatja, amíg van másik lehetőség. Ezzel a stratégiával automatikusan nagy csoportok formálódnak abból a színből. Az újítás a TabuColorRandom-ban, hogy a leggyakrabban előforduló szint hagyja ki. Ez növelheti a nagyobb csoportok kialakulását a kijátszásban. Még ehhez hozzá vették epszilon mohó politikát, hogy az előbb említett stratégiától eltérjen.\cite{sutton2018reinforcement} Mielőtt a szimulált stratégiát használnánk epszilon eséllyel egy véletlenszerű lépés van használva.
+	\\
+	\\
+	Egy másik alternatíva rulett kerék kiválasztás használata a MCTS-hez. Ez nem csak egy csoport maximalizálására törekszik, hanem a többiére is. Mivel számításilag sokkal drágább ez a módszer mint a TabuClorRandom, nem nőveli SP-MCTS eredményét \cite{sutton2018reinforcement}.
+	\\
+	\subsection{kiterjesztés}
+	
+	A kiterjesztési stratégia dönti el, hogy melyik csomópontok vannak eltárolva a a memóriában. Coulom \cite{coulom2006efficient} azt javasolta, hogy egy gyerekkel bővítsük kijátszásonként. Ezzel a stratégiával a kibővített csúcspont összhangban van az első olyan pozícióval, ami nincs benne a fában.  
+	\\
+	\subsection{Vissza terjesztés}
+	
+	Ebben a lépésben a kijátszás végeredménye vissza van terjesztve a gyökérig. Az irodalomban több stratégia is van ajánlva\cite{coulom2006efficient} \cite{chaslot2006monte}. Az egyik legjobb eredmény SP-MCTS elért az a kijátszások átlagos értékén alapult.
+	\\
+	\subsection{Utolsó lépés kiválasztás}
+	
+	A négy lépés addig van ismételve, amíg ki nem fut az időből. Amikor ez megtörténik, egy végső lépés kiválasztás történik, ami eldönti, hogy mit kell lépni. Két standard létezik erre, ami a a döntésüket a gyökér csúcspont gyerekeire alapozza. (1) Azt a gyereket választjuk aminek a legnagyobb az átlag pontja és (2) annak gyereknek a választása, ami legtöbbször volt kijátszva. Puzzle játékok számára az a legfontosabb hogy a legmagasabb pontot találjuk meg. Ezért érdemesebb a legnagyobb átlag pontú gyereket választani.
+	\\
+	\\
+	Az alapvető különbség miatt, hogy ez egy játékosos játék, ezért lehetséges egy nagy keresést indítani a kezdeti pozícióból majd az összes lépést kijátszani. Ezzel a megközelítéssel megfontolásra kerül az elején minden lépés, addig amíg az időből nem fut ki. Érdemes lehet vizsgálni, hogy ez a megközelítés jobban teljesít-e, mintha lépésenként szabnánk neki időt.
+	\\
+	\subsection{Véletlenszerű újrakezdések}
+	
+	Megfigyelések alapján \cite{schadd2012single} SameGame-ben érdemes mély fákat generálni. Azonban, ha a legígéretesebb lehetőséget tárjuk fel, akkor SP-MCTS egy lokális maximumba szorulhat. Ezért véletlenszerű újra indítással és a generátorokhoz más (seed)-t használva ez a probléma megoldható. Mivel nincs információ megosztva a keresések között. Ez hasonlít a gyökér párhuzamosításhoz \cite{chaslot2008parallel}.
+	\\
+	\\
+	Gyökér párhuzamosítás az egy hatékony módja, több mag használatának \cite{chaslot2008parallel}. Azonban, Egyszálú rendszerben lehetne amellett érvelni, hogy ez megfelelő módja a lokális maximum elkerülésének. Mert valójában nincs igazi párhuzamosítás, ezt nevezték véletlenszerű újrakezdésnek.
 	
 	
 	\section{Program képességei}

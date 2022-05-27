@@ -5,16 +5,20 @@ Reallocating 'name_of_file' (item size: 1) to 14 items.
 Reallocating 'name_of_file' (item size: 1) to 6 items.
 The style file: plain.bst
 Database file #1: onlabForrasok.bib
-I was expecting a `,' or a `}'---line 235 of file onlabForrasok.bib
+I was expecting a `,' or a `}'---line 209 of file onlabForrasok.bib
  :  
  :  year={2007}
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-Repeated entry---line 333 of file onlabForrasok.bib
+Repeated entry---line 307 of file onlabForrasok.bib
  : @inproceedings{chaslot2006monte
  :                                ,
 I'm skipping whatever remains of this entry
-Repeated entry---line 349 of file onlabForrasok.bib
+Repeated entry---line 323 of file onlabForrasok.bib
+ : @inproceedings{coulom2006efficient
+ :                                   ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 371 of file onlabForrasok.bib
  : @inproceedings{coulom2006efficient
  :                                   ,
 I'm skipping whatever remains of this entry
@@ -22,45 +26,45 @@ Warning--empty journal in smith2006personal
 Warning--empty year in smith2006personal
 Warning--empty journal in ChainShot1985
 Warning--empty year in ChainShot1985
-You've used 19 entries,
+You've used 20 entries,
             2118 wiz_defined-function locations,
-            612 strings with 6968 characters,
-and the built_in function-call counts, 7008 in all, are:
-= -- 703
-> -- 295
-< -- 10
-+ -- 120
-- -- 98
-* -- 457
-:= -- 1111
-add.period$ -- 61
-call.type$ -- 19
-change.case$ -- 102
+            616 strings with 7020 characters,
+and the built_in function-call counts, 7355 in all, are:
+= -- 739
+> -- 303
+< -- 11
++ -- 123
+- -- 100
+* -- 469
+:= -- 1157
+add.period$ -- 64
+call.type$ -- 20
+change.case$ -- 105
 chr.to.int$ -- 0
-cite$ -- 23
-duplicate$ -- 298
-empty$ -- 569
-format.name$ -- 98
-if$ -- 1516
+cite$ -- 24
+duplicate$ -- 320
+empty$ -- 606
+format.name$ -- 100
+if$ -- 1602
 int.to.chr$ -- 0
-int.to.str$ -- 19
-missing$ -- 22
-newline$ -- 97
-num.names$ -- 38
-pop$ -- 134
+int.to.str$ -- 20
+missing$ -- 24
+newline$ -- 101
+num.names$ -- 40
+pop$ -- 148
 preamble$ -- 1
-purify$ -- 86
+purify$ -- 89
 quote$ -- 0
-skip$ -- 212
+skip$ -- 227
 stack$ -- 0
-substring$ -- 445
-swap$ -- 87
-text.length$ -- 10
+substring$ -- 462
+swap$ -- 96
+text.length$ -- 11
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 70
+type$ -- 72
 warning$ -- 4
-while$ -- 73
-width$ -- 21
-write$ -- 209
-(There were 3 error messages)
+while$ -- 77
+width$ -- 22
+write$ -- 218
+(There were 4 error messages)
